@@ -89,6 +89,14 @@ class BandejaController extends Controller
                 'rut' => '18.901.234-5',
                 'rodilla' => 'Ambas',
                 'estado' => 'aprobada'
+            ],
+            [
+                'id' => 'SO-1245',
+                'fecha' => '26/02/2025',
+                'paciente' => 'Sebastián Vera Laytte',
+                'rut' => '20.479.444-8',
+                'rodilla' => 'Ambas',
+                'estado' => 'aprobada'
             ]
         ];
 
