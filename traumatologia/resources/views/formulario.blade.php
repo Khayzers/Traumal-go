@@ -4,18 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orden de Resonancia Gratuita - TraumaMed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 </head>
 <body>
-    <div class="header">
-        <div class="container">
-            <div class="logo-container">
-                <div class="hexagon-icon">T</div>
-                <div class="logo">Trauma<span>Med</span></div>
-            </div>
-        </div>
-    </div>
+    @include('partials.navbar')
     
     <div class="container">
         <div class="form-title-container">

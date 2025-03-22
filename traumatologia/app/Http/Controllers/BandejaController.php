@@ -16,7 +16,9 @@ class BandejaController extends Controller
                 'paciente' => 'Roberto Gómez Morales',
                 'rut' => '12.345.678-9',
                 'rodilla' => 'Izquierda',
-                'estado' => 'pendiente'
+                'traumatologo' => 'Traumatólogo 1',
+                'rut_traumatologo' => '11111111-1',
+                'estado' => 'respondido'
             ],
             [
                 'id' => 'SO-1252',
@@ -24,7 +26,9 @@ class BandejaController extends Controller
                 'paciente' => 'María Eugenia Campos',
                 'rut' => '14.562.987-0',
                 'rodilla' => 'Derecha',
-                'estado' => 'pendiente'
+                'traumatologo' => 'Traumatólogo 2',
+                'rut_traumatologo' => '22222222-2',
+                'estado' => 'visado'
             ],
             [
                 'id' => 'SO-1251',
@@ -32,7 +36,9 @@ class BandejaController extends Controller
                 'paciente' => 'Pedro Fernández Silva',
                 'rut' => '17.890.123-4',
                 'rodilla' => 'Ambas',
-                'estado' => 'aprobada'
+                'traumatologo' => 'Traumatólogo 3',
+                'rut_traumatologo' => '33333333-3',
+                'estado' => 'visado'
             ],
             [
                 'id' => 'SO-1250',
@@ -40,7 +46,9 @@ class BandejaController extends Controller
                 'paciente' => 'Luisa Martínez Rodríguez',
                 'rut' => '9.876.543-2',
                 'rodilla' => 'Izquierda',
-                'estado' => 'enviada'
+                'traumatologo' => 'Traumatólogo 4',
+                'rut_traumatologo' => '44444444-4',
+                'estado' => 'visado'
             ],
             [
                 'id' => 'SO-1249',
@@ -48,6 +56,8 @@ class BandejaController extends Controller
                 'paciente' => 'José Carlos Araya',
                 'rut' => '13.456.789-1',
                 'rodilla' => 'Derecha',
+                'traumatologo' => 'Traumatólogo 5',
+                'rut_traumatologo' => '55555555-5',
                 'estado' => 'pendiente'
             ],
             [
@@ -56,7 +66,9 @@ class BandejaController extends Controller
                 'paciente' => 'Catalina Vega Mendoza',
                 'rut' => '15.678.912-3',
                 'rodilla' => 'Ambas',
-                'estado' => 'rechazada'
+                'traumatologo' => 'Traumatólogo 5',
+                'rut_traumatologo' => '66666666-6',
+                'estado' => 'pendiente'
             ],
             [
                 'id' => 'SO-1247',
@@ -64,7 +76,9 @@ class BandejaController extends Controller
                 'paciente' => 'Fernando Valenzuela',
                 'rut' => '8.765.432-1',
                 'rodilla' => 'Derecha',
-                'estado' => 'aprobada'
+                'traumatologo' => 'Traumatólogo 4',
+                'rut_traumatologo' => '77777777-7',
+                'estado' => 'pendiente'
             ],
             [
                 'id' => 'SO-1246',
@@ -72,7 +86,9 @@ class BandejaController extends Controller
                 'paciente' => 'Carla Muñoz Pinto',
                 'rut' => '16.789.012-5',
                 'rodilla' => 'Izquierda',
-                'estado' => 'enviada'
+                'traumatologo' => 'Traumatólogo 4',
+                'rut_traumatologo' => '88888888-8',
+                'estado' => 'pendiente'
             ],
             [
                 'id' => 'SO-1245',
@@ -80,6 +96,8 @@ class BandejaController extends Controller
                 'paciente' => 'Jorge Fuentes Lagos',
                 'rut' => '11.234.567-8',
                 'rodilla' => 'Derecha',
+                'traumatologo' => 'Traumatólogo 4',
+                'rut_traumatologo' => '99999999-9',
                 'estado' => 'pendiente'
             ],
             [
@@ -88,15 +106,19 @@ class BandejaController extends Controller
                 'paciente' => 'Ana León Contreras',
                 'rut' => '18.901.234-5',
                 'rodilla' => 'Ambas',
-                'estado' => 'aprobada'
+                'traumatologo' => 'Traumatólogo 4',
+                'rut_traumatologo' => '12121212-1',
+                'estado' => 'pendiente'
             ],
             [
-                'id' => 'SO-1245',
+                'id' => 'SO-1243',
                 'fecha' => '26/02/2025',
                 'paciente' => 'Sebastián Vera Laytte',
                 'rut' => '20.479.444-8',
                 'rodilla' => 'Ambas',
-                'estado' => 'aprobada'
+                'traumatologo' => 'Traumatólogo 4',
+                'rut_traumatologo' => '23232323-2',
+                'estado' => 'pendiente'
             ]
         ];
 
@@ -105,15 +127,15 @@ class BandejaController extends Controller
         $pendientes = count(array_filter($solicitudes, function($item) {
             return $item['estado'] === 'pendiente';
         }));
-        $aprobadas = count(array_filter($solicitudes, function($item) {
-            return $item['estado'] === 'aprobada';
+        $visadas = count(array_filter($solicitudes, function($item) {
+            return $item['estado'] === 'visada';
         }));
-        $enviadas = count(array_filter($solicitudes, function($item) {
-            return $item['estado'] === 'enviada';
+        $respondidas = count(array_filter($solicitudes, function($item) {
+            return $item['estado'] === 'respondida';
         }));
 
         // Change this line to match your view path
-        return view('bandeja.centro.index', compact('solicitudes', 'total', 'pendientes', 'aprobadas', 'enviadas'));
+        return view('bandeja.centro.index', compact('solicitudes', 'total', 'pendientes', 'visadas', 'respondidas'));
     }
 
     public function aprobar($id)
@@ -121,7 +143,7 @@ class BandejaController extends Controller
         // En un entorno real, aquí actualizaríamos la BD
         // Por ahora solo redirigimos con un mensaje
         return redirect()->route('bandeja.solicitudes')
-            ->with('success', "Solicitud $id aprobada correctamente");
+            ->with('success', "Solicitud $id visada correctamente");
     }
 
     public function rechazar($id)

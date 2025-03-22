@@ -7,6 +7,7 @@ use App\Http\Controllers\BandejaTraumatologoController;
 use App\Http\Controllers\TraumatologosController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExamenController;
 
 // Home/Welcome Route
 Route::get('/', function () {
@@ -42,3 +43,6 @@ Route::prefix('bandeja')->group(function () {
     Route::get('/traumatologo/revisar/{id}', [BandejaTraumatologoController::class, 'revisar'])->name('bandeja.traumatologo.revisar');
     Route::get('/traumatologo/contactar/{id}', [BandejaTraumatologoController::class, 'contactar'])->name('bandeja.traumatologo.contactar');
 });
+
+Route::get('/examenes/orden/{id}', [ExamenController::class, 'mostrarOrden'])->name('examenes.orden');
+Route::get('/examenes/pdf/{id}', [ExamenController::class, 'mostrarPDF'])->name('examenes.pdf');

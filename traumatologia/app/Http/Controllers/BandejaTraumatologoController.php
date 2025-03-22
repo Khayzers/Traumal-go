@@ -11,32 +11,90 @@ class BandejaTraumatologoController extends Controller
         // Lógica para obtener los datos necesarios para la vista de la bandeja del traumatólogo
         
         // Ejemplo de datos (reemplaza esto con tu lógica real)
-        $pacientes = [
+        $solicitudes = [
             [
                 'id' => 1,
-                'fecha' => '2023-05-22',
+                'fecha' => '22-01-2025',
                 'nombre' => 'Juan Pérez',
                 'rut' => '12345678-9',
-                'telefono' => '+56912345678',
+                'telefono' => '+569999999',
                 'rodilla' => 'Izquierda',
                 'centro' => 'Centro A',
-                'estado' => 'recibida'
+                'estado' => 'Recibida'
+            ],
+
+            [
+                'id' => 2,
+                'fecha' => '26-01-2025',
+                'nombre' => 'Sebastián Vera',
+                'rut' => '11111111-1',
+                'telefono' => '+569999999',
+                'rodilla' => 'Derecha',
+                'centro' => 'Centro A',
+                'estado' => 'Recibida'
+            ],
+
+            [
+                'id' => 3,
+                'fecha' => '13-02-2025',
+                'nombre' => 'Nicolas Carrillo',
+                'rut' => '22222222-2',
+                'telefono' => '+569999999',
+                'rodilla' => 'Derecha',
+                'centro' => 'Centro A',
+                'estado' => 'Agendada'
+            ],
+
+            [
+                'id' => 4,
+                'fecha' => '01-03-2025',
+                'nombre' => 'Anival Lufi',
+                'rut' => '33333333-3',
+                'telefono' => '+569999999',
+                'rodilla' => 'Ambas',
+                'centro' => 'Centro A',
+                'estado' => 'Agendada'
+            ],
+
+            [
+                'id' => 5,
+                'fecha' => '13-03-2025',
+                'nombre' => 'Renzo Vergara',
+                'rut' => '44444444-4',
+                'telefono' => '+569999999',
+                'rodilla' => 'Derecha',
+                'centro' => 'Centro A',
+                'estado' => 'Rechazada'
+            ],
+
+            [
+                'id' => 6,
+                'fecha' => '14-03-2025',
+                'nombre' => 'Pablo Pérez De Tudela',
+                'rut' => '55555555-5',
+                'telefono' => '+569999999',
+                'rodilla' => 'Izquierda',
+                'centro' => 'Centro A',
+                'estado' => 'Rechazada'
             ],
             // Agrega más pacientes según sea necesario
         ];
         
-        $total = count($pacientes);
-        $pendientes = count(array_filter($pacientes, function($paciente) {
-            return $paciente['estado'] == 'recibida';
+        $total = count($solicitudes);
+        $recibidas = count(array_filter($solicitudes, function($paciente) {
+            return $paciente['estado'] == 'Recibida';
         }));
-        $revisadas = count(array_filter($pacientes, function($paciente) {
-            return $paciente['estado'] == 'revisada';
-        }));
-        $contactadas = count(array_filter($pacientes, function($paciente) {
-            return $paciente['estado'] == 'contactada';
+        $agendadas = count(array_filter($solicitudes, function($paciente) {
+            return $paciente['estado'] == 'Agendada';
         }));
         
-        return view('bandeja.traumatologo.index', compact('pacientes', 'total', 'pendientes', 'revisadas', 'contactadas'));
+        $rechazadas = count(array_filter($solicitudes, function($paciente) {
+            return $paciente['estado'] == 'Rechazada';
+        }));
+
+        $pendientes = $total - ($recibidas + $agendadas + $rechazadas);
+
+        return view('bandeja.traumatologo.index', compact('solicitudes', 'total', 'pendientes', 'recibidas', 'agendadas', 'rechazadas'));
         }
     
     public function revisar($id)
