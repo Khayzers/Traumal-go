@@ -373,6 +373,11 @@
                     <p><strong>Correo Electrónico:</strong> <span id="modalEmailPaciente"></span></p>
                 </div>
 
+                <p class="confirmation-message">
+                    <strong>¡Gracias por su solicitud!</strong><br>
+                    Al hacer clic en "Entendido" será redirigido a la página principal.
+                </p>
+
                 <button class="modal-btn" onclick="closeModal()">Entendido</button>
             </div>
         </div>
@@ -423,28 +428,51 @@
 
         // Función para mostrar el modal
         function showModal(data) {
-            document.getElementById('modalCentroNombre').textContent = data.centro;
-            document.getElementById('modalNombrePaciente').textContent = data.nombre;
-            document.getElementById('modalRutPaciente').textContent = data.rut;
-            document.getElementById('modalEmailPaciente').textContent = data.email;
+            console.log("Ejecutando showModal con datos:", data);
+            // Asigna los valores a los elementos del modal
+            document.getElementById('modalCentroNombre').textContent = data.centro || "Centro seleccionado";
+            document.getElementById('modalNombrePaciente').textContent = data.nombre || "Nombre del paciente";
+            document.getElementById('modalRutPaciente').textContent = data.rut || "RUT del paciente";
+            document.getElementById('modalEmailPaciente').textContent = data.email || "Email del paciente";
+
+            // Muestra el modal
             document.getElementById('successModal').style.display = 'flex';
         }
 
-        // Función para cerrar el modal
+        // Función para cerrar el modal y redirigir a la página principal
         function closeModal() {
+            console.log("Cerrando modal y redirigiendo...");
             document.getElementById('successModal').style.display = 'none';
-            // Opcionalmente, redireccionar a otra página después de cerrar el modal
-            // window.location.href = "{{ route('pagina.boton') }}";
+
+            // Redirección a la página de inicio - verifica que esta ruta exista
+            try {
+                // Intenta usar la ruta 'inicio'
+                window.location.href = "{{ route('inicio') }}";
+            } catch (error) {
+                // Si hay un error, redirecciona a la raíz
+                console.error("Error con la ruta 'inicio':", error);
+                window.location.href = "/";
+            }
         }
 
         // Validación y envío del formulario
         document.getElementById('evaluacionForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // Capturar referencia al botón y su texto original
+            const submitButton = document.querySelector('.btn-submit');
+            const originalButtonText = submitButton.textContent;
+
+            // Cambiar el texto del botón para indicar que se está procesando
+            submitButton.textContent = 'Enviando...';
+            submitButton.disabled = true;
+
             // Validar que se haya seleccionado una comuna
             const comuna = document.getElementById('comuna').value;
             if (!comuna) {
                 alert('Por favor, seleccione una comuna.');
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
                 return;
             }
 
@@ -452,6 +480,8 @@
             const centroSeleccionado = document.querySelector('input[name="centro"]:checked');
             if (!centroSeleccionado) {
                 alert('Por favor, seleccione un centro médico.');
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
                 return;
             }
 
@@ -466,33 +496,65 @@
             centroNombreInput.value = nombreCentro;
             this.appendChild(centroNombreInput);
 
-            // Enviar formulario mediante AJAX
+            // Enviar formulario mediante AJAX - Corregido:
             const formData = new FormData(this);
 
             fetch('{{ route('formulario.guardar') }}', {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-Requested-With': 'XMLHttpRequest',
                         'Accept': 'application/json'
-                    }
+                    },
+                    // FormData toma automáticamente el token CSRF del formulario
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor: ' + response.status);
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    // Restaurar el botón
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+
                     if (data.success) {
-                        // Mostrar modal con datos
-                        showModal({
-                            nombre: data.data.nombre,
-                            rut: data.data.rut,
-                            email: data.data.email,
-                            centro: data.data.centro
-                        });
+                        console.log("Mostrando modal con datos:", data.data); // Depuración
+
+                        try {
+                            // Mostrar modal con datos
+                            showModal({
+                                nombre: data.data.nombre,
+                                rut: data.data.rut,
+                                email: data.data.email,
+                                centro: data.data.centro
+                            });
+
+                            // Muestra el modal de manera forzada (por si acaso)
+                            document.getElementById('successModal').style.display = 'flex';
+                        } catch (error) {
+                            console.error("Error al mostrar modal:", error);
+                            alert('¡Solicitud enviada con éxito! Gracias por su solicitud.');
+                            // Redirigir después de un tiempo
+                            setTimeout(function() {
+                                try {
+                                    window.location.href = "{{ route('inicio') }}";
+                                } catch (e) {
+                                    window.location.href = "/";
+                                }
+                            }, 2000);
+                        }
                     } else {
                         alert('Ocurrió un error al enviar el formulario. Por favor, inténtelo nuevamente.');
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    // Restaurar el botón
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+
+                    console.error('Error detallado:', error);
                     alert('Ocurrió un error al enviar el formulario. Por favor, inténtelo nuevamente.');
                 });
         });
