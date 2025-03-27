@@ -28,6 +28,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/evaluacion', [FormularioController::class, 'index'])->name('pagina.boton');
 Route::get('/formulario', [FormularioController::class, 'formulario'])->name('formulario.evaluacion');
 Route::post('/formulario', [FormularioController::class, 'guardarFormulario'])->name('formulario.guardar');
+Route::post('/formulario-guardar', [FormularioController::class, 'guardarFormulario'])->name('formulario.guardar');
 
 Route::get('/traumatologos', [TraumatologosController::class, 'index'])->name('traumatologos');
 
