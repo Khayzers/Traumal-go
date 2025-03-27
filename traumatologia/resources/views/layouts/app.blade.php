@@ -93,6 +93,7 @@
                 <li style="margin-left: 10px;">
                     <a href="{{ route('bandeja.solicitudes') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.traumatologo') ? '600' : '400' }}; padding: 8px 16px; border-radius: 4px; {{ request()->routeIs('bandeja.traumatologo') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Bandeja Traumatólogo</a>
                 </li>
+                
             </ul>
         </div>
     </nav>

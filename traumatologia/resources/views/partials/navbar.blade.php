@@ -1,3 +1,4 @@
+</nav>
 <nav style="background-color: #1A73E8; padding: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center;">
         <a href="{{ route('inicio') }}" style="display: flex; align-items: center; text-decoration: none;">
@@ -8,19 +9,25 @@
         <div style="display: flex; align-items: center;">
             <ul style="display: flex; list-style-type: none; margin: 0; padding: 0;">
                 <li>
-                    <a href="{{ route('inicio') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('inicio') ? '600' : '400' }}; padding: 8px 16px; border-radius: 4px; {{ request()->routeIs('inicio') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Inicio</a>
+                    <a href="{{ route('inicio') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('inicio') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('inicio') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Inicio</a>
                 </li>
                 <li style="margin-left: 10px;">
-                    <a href="{{ route('dashboard') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('dashboard') ? '600' : '400' }}; padding: 8px 16px; border-radius: 4px; {{ request()->routeIs('dashboard') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('dashboard') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('dashboard') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Dashboard</a>
                 </li>
                 <li style="margin-left: 10px;">
-                    <a href="{{ route('bandeja.solicitudes') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.solicitudes') ? '600' : '400' }}; padding: 8px 16px; border-radius: 4px; {{ request()->routeIs('bandeja.solicitudes') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Bandeja Centro</a>
+                    <a href="{{ route('bandeja.solicitudes') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.solicitudes') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('bandeja.solicitudes') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Centro</a>
                 </li>
                 <li style="margin-left: 10px;">
-                    <a href="{{ route('bandeja.traumatologo') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.traumatologo') ? '600' : '400' }}; padding: 8px 16px; border-radius: 4px; {{ request()->routeIs('bandeja.traumatologo') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Bandeja Traumatólogo</a>
+                    <a href="{{ route('bandeja.tecnologo') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.tecnologo') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('bandeja.tecnologo') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Tecnólogo</a>
                 </li>
                 <li style="margin-left: 10px;">
-                    <a href="{{ route('traumatologos') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('traumatologos') ? '600' : '400' }}; padding: 8px 16px; border-radius: 4px; {{ request()->routeIs('traumatologos') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Traumatólogos</a>
+                    <a href="{{ route('bandeja.traumatologo') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.traumatologo') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('bandeja.traumatologo') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Traumatólogo</a>
+                </li>
+                <li style="margin-left: 10px;">
+                    <a href="{{ route('traumatologos') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('traumatologos') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('traumatologos') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Traumatólogos</a>
+                </li>
+                <li style="margin-left: 10px;">
+                    <a href="{{ route('bandeja.administrador') }}" style="color: white; text-decoration: none; font-weight: {{ request()->routeIs('bandeja.administrador') ? '600' : '400' }}; padding: 8px 15px; border-radius: 4px; {{ request()->routeIs('bandeja.administrador') ? 'background-color: rgba(255,255,255,0.2);' : '' }}">Admin</a>
                 </li>
             </ul>
             

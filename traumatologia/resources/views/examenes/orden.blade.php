@@ -9,209 +9,10 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/orden.css') }}">
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        
-        .order-container {
-            max-width: 800px;
-            margin: 30px auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            padding: 0;
-            overflow: hidden;
-        }
-        
-        .pdf-viewer {
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background: white;
-            padding: 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .order-document {
-            width: 100%;
-            min-height: 800px;
-            border: 1px solid #d1d5db;
-            padding: 20px 40px;
-            position: relative;
-        }
-        
-        .btn-actions {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .btn-custom {
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .btn-back {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            border: 1px solid #d1d5db;
-        }
-        
-        .btn-back:hover {
-            background-color: #e5e7eb;
-        }
-        
-        .btn-print {
-            background-color: #5595e9;
-            color: white;
-            border: none;
-        }
-        
-        .btn-print:hover {
-            background-color: #4075c9;
-        }
-        
-        /* Estilos específicos del documento */
-        .doc-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo {
-            width: 40px;
-            height: 40px;
-            background-color: #5595e9;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 22px;
-            margin-right: 10px;
-        }
-        
-        .brand-name {
-            font-weight: 700;
-            font-size: 22px;
-            color: #333;
-        }
-        
-        .brand-name-accent {
-            color: #FF9966;
-        }
-        
-        .order-info {
-            text-align: right;
-            font-size: 14px;
-            color: #6b7280;
-        }
-        
-        .doc-title {
-            text-align: center;
-            font-size: 28px;
-            color: #1f2937;
-            font-weight: 600;
-            margin: 40px 0 30px;
-        }
-        
-        .section-label {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 5px;
-        }
-        
-        .input-field {
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 10px 15px;
-            font-size: 16px;
-            margin-bottom: 20px;
-            width: 100%;
-            background-color: #f9fafb;
-        }
-        
-        .divider {
-            height: 1px;
-            background-color: #e5e7eb;
-            margin: 30px 0;
-        }
-        
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 20px;
-        }
-        
-        .exam-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .exam-item {
-            margin-bottom: 20px;
-        }
-        
-        .exam-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #1f2937;
-        }
-        
-        .exam-prep {
-            font-size: 13px;
-            color: #6b7280;
-        }
-        
-        .signature-area {
-            margin-top: 60px;
-            text-align: center;
-        }
-        
-        .signature-img {
-            max-width: 120px;
-            max-height: 80px;
-            margin: 0 auto;
-            display: block;
-        }
-        
-        .signature-line {
-            width: 200px;
-            height: 1px;
-            background-color: #d1d5db;
-            margin: 10px auto;
-        }
-        
-        .doctor-name {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-        
-        .doctor-id {
-            font-size: 13px;
-            color: #6b7280;
-        }
 
-        .two-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
     </style>
 </head>
 <body>
@@ -220,7 +21,22 @@
 
     <div class="container-fluid">
         <div class="order-container">
-            <div class="pdf-viewer">
+            <!-- Información inicial y botón para ver la orden -->
+            <div class="document-info">
+                <h2>Orden de Examen - {{ $solicitud->id }}</h2>
+                <p>Paciente: {{ $solicitud->paciente }}</p>
+                <p>Fecha: {{ $solicitud->fecha }}</p>
+                <p>Examen: Resonancia Magnética - Rodilla {{ $solicitud->rodilla }}</p>
+            </div>
+            
+            <div class="buttons-container">
+                <button id="btnViewOrder" class="btn btn-view">
+                    <i class="fas fa-file-medical me-2"></i> Ver Orden de Examen
+                </button>
+            </div>
+            
+            <!-- Orden oculta inicialmente -->
+            <div class="pdf-viewer" id="orderViewer">
                 <div class="order-document">
                     <!-- Cabecera del documento -->
                     <div class="doc-header">
@@ -290,7 +106,7 @@
                 </div>
             </div>
             
-            <div class="btn-actions">
+            <div class="btn-actions" id="orderActions" style="display: none;">
                 <a href="{{ url()->previous() }}" class="btn btn-custom btn-back">
                     <i class="fas fa-arrow-left me-2"></i> Volver
                 </a>
@@ -302,6 +118,20 @@
     </div>
     
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configurar el botón para mostrar la orden
+        document.getElementById('btnViewOrder').addEventListener('click', function() {
+            // Mostrar la orden
+            document.getElementById('orderViewer').style.display = 'block';
+            // Mostrar los botones de acción
+            document.getElementById('orderActions').style.display = 'flex';
+            // Ocultar el botón de "Ver Orden"
+            this.style.display = 'none';
+            // Ocultar la información inicial
+            document.querySelector('.document-info').style.display = 'none';
+        });
+    });
+    
     function imprimirOrden() {
         // Crear un iframe oculto para la impresión
         const iframe = document.createElement('iframe');

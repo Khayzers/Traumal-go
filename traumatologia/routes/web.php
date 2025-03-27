@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\BandejaController;
 use App\Http\Controllers\BandejaTraumatologoController;
+use App\Http\Controllers\BandejaTecnologoController;
+use App\Http\Controllers\BandejaAdministradorController;
 use App\Http\Controllers\TraumatologosController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
@@ -42,7 +44,22 @@ Route::prefix('bandeja')->group(function () {
     Route::get('/traumatologo', [BandejaTraumatologoController::class, 'index'])->name('bandeja.traumatologo');
     Route::get('/traumatologo/revisar/{id}', [BandejaTraumatologoController::class, 'revisar'])->name('bandeja.traumatologo.revisar');
     Route::get('/traumatologo/contactar/{id}', [BandejaTraumatologoController::class, 'contactar'])->name('bandeja.traumatologo.contactar');
+    
+    // Tecnologo Bandeja Routes
+    Route::get('/tecnologo', [BandejaTecnologoController::class, 'index'])->name('bandeja.tecnologo');
+    Route::get('/tecnologo/subir/{id}', [BandejaTecnologoController::class, 'subirInforme'])->name('bandeja.tecnologo.subir');
+    Route::post('/tecnologo/guardar-informe', [BandejaTecnologoController::class, 'guardarInforme'])->name('bandeja.tecnologo.guardar');
+
+    // Administrador Bandeja Routes
+    Route::get('/administrador', [BandejaAdministradorController::class, 'index'])->name('bandeja.administrador');
+    Route::get('/administrador/usuarios', [BandejaAdministradorController::class, 'usuarios'])->name('bandeja.administrador.usuarios');
+    Route::get('/administrador/estadisticas', [BandejaAdministradorController::class, 'estadisticas'])->name('bandeja.administrador.estadisticas');
 });
 
 Route::get('/examenes/orden/{id}', [ExamenController::class, 'mostrarOrden'])->name('examenes.orden');
 Route::get('/examenes/pdf/{id}', [ExamenController::class, 'mostrarPDF'])->name('examenes.pdf');
+
+// Admin Route para compatibilidad
+Route::get('/admin', function () {
+    return redirect()->route('bandeja.administrador');
+})->name('admin');
